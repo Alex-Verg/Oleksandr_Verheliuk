@@ -91,9 +91,9 @@ public class StepsDefinitions {
         Assert.assertFalse(adminPage.isJobExist(internJob.getJobTitle()));
     }
 
-//    @After()
-//    public void closeBrowser() {
-//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-//        driver.quit();
-//    }
+    @After()
+    public void closeBrowser() {
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.quit();
+    }
 }
