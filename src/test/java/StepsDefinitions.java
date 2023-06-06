@@ -9,10 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import pages.AddJobTitlePage;
-import pages.AdminPage;
-import pages.LoginPage;
-import pages.Page;
+import pages.*;
 
 import java.time.Duration;
 import java.util.List;
@@ -33,37 +30,19 @@ public class StepsDefinitions {
     @When("I fill login form")
     public void iFillLoginForm() {
         LoginPage loginPage = new LoginPage(driver);
-        String username = loginPage.getText(driver.findElement(new By.ByXPath("/html/body/div/div[1]/div/div[1]/div/div[2]/div[2]/div/div/p[1]")));
-        String password = loginPage.getText(driver.findElement(new By.ByXPath("/html/body/div/div[1]/div/div[1]/div/div[2]/div[2]/div/div/p[2]")));
-        username = username.substring(username.lastIndexOf(":") + 2);
-        password = password.substring(password.lastIndexOf(":") + 2);
-        loginPage.fillUsername(username);
-        loginPage.fillPassword(password);
         loginPage.login();
     }
 
     @Then("I successful login")
     public void iSuccessfulLogin() {
-        Page page = new Page(driver);
-        String username = page.getText(driver.findElement(By.className("oxd-userdropdown-name")));
-        Assert.assertEquals("Paul Collings", username);
+        MainPage mainPage = new MainPage(driver);
+        Assert.assertTrue(mainPage.isLogined());
     }
 
     @Given("I go to Add Job Title page \\(Admin -> Job - Job Titles page -> Click on the Add button)")
     public void iGoToAdminJobJobTitlesPage() {
-        Page page = new Page(driver);
-
-        WebElement adminButton = driver.findElement(By.xpath("//a[@href  = '/web/index.php/admin/viewAdminModule']"));
-        page.clickButton(adminButton);
-
-        WebElement jobButton = driver.findElement(By.xpath("//span[text()  = 'Job ']"));
-        page.clickButton(jobButton);
-
-        WebElement jobTitlesButton = driver.findElement(By.xpath("//a[text()  = 'Job Titles']"));
-        page.clickButton(jobTitlesButton);
-
-        WebElement addButton = driver.findElement(By.xpath("//button[@class  = 'oxd-button oxd-button--medium oxd-button--secondary']"));
-        page.clickButton(addButton);
+        MainPage mainPage = new MainPage(driver);
+        mainPage.goToJobTitles();
     }
 
     @When("I fill job title form")
@@ -112,9 +91,9 @@ public class StepsDefinitions {
         Assert.assertFalse(adminPage.isJobExist(internJob.getJobTitle()));
     }
 
-    @After()
-    public void closeBrowser() {
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.quit();
-    }
+//    @After()
+//    public void closeBrowser() {
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//        driver.quit();
+//    }
 }

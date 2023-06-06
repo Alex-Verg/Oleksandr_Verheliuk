@@ -1,9 +1,6 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
 import java.time.Duration;
@@ -23,6 +20,8 @@ public class AdminPage extends Page {
         WebElement deleteButton = driver.findElement(By.xpath("//button[text() = ' Delete Selected ']"));
         Actions action = new Actions(driver);
         action.scrollToElement(deleteButton).perform();
+        action.sendKeys(Keys.PAGE_UP).build().perform();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         clickButton(deleteButton);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         WebElement confirmDeleteButton = driver.findElement(By.xpath("//button[text() = ' Yes, Delete ']"));
